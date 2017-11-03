@@ -13,8 +13,10 @@ const RGX = /<div id="app"[^>]*>.*?(?=<script)/i;
 
 const assets = join(__dirname, 'build');
 const template = fs.readFileSync('./build/index.html', 'utf8');
+const favicon = require('serve-favicon')(join(assets, 'favicon.ico'));
 
 express()
+	.use(favicon)
 	.use(compression)
 	.use(express.static(assets))
 	.get('*', (req, res) => {
