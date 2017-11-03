@@ -16,11 +16,11 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 
-	render() {
+	render(props) {
 		return (
 			<div id="app">
 				<Header />
-				<Router onChange={this.handleRoute}>
+				<Router url={props.url} onChange={this.handleRoute}>
 					<Home path="/" />
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
