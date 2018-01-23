@@ -14,6 +14,7 @@ export default class App extends Component {
 	 */
 	handleRoute = e => {
 		this.currentUrl = e.url;
+		window.ga && ga.send('pageview', { dp:e.url });
 	};
 
 	render(props) {

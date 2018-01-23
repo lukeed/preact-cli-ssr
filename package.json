@@ -9,11 +9,13 @@
     "start": "node server"
   },
   "devDependencies": {
-    "preact-cli": "^2.0.0"
+    "preact-cli": "^2.0.0",
+    "undom": "^0.3.3"
   },
   "dependencies": {
     "compression": "^1.7.1",
     "express": "^4.16.2",
+    "ganalytics": "^3.0.0",
     "preact": "^8.2.1",
     "preact-compat": "^3.17.0",
     "preact-render-to-string": "^3.7.0",

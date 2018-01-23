@@ -5,6 +5,7 @@ const { join, basename } = require('path');
 const compression = require('compression')();
 const render = require('preact-render-to-string');
 const bundle = require('./build/ssr-build/ssr-bundle');
+require('./shims');
 
 const App = bundle.default;
 const { PORT=3000 } = process.env;
