@@ -1,33 +1,31 @@
-const fs = require('fs');
+const sirv = require('sirv');
+const polka = require('polka');
 const { h } = require('preact');
-const express = require('express');
-const { join, basename } = require('path');
+const { basename } = require('path');
+const { readFileSync } = require('fs');
 const compression = require('compression')();
 const render = require('preact-render-to-string');
 const bundle = require('./build/ssr-build/ssr-bundle');
 
 const App = bundle.default;
 const { PORT=3000 } = process.env;
+
 // TODO: improve this?
 const RGX = /<div id="app"[^>]*>.*?(?=<script)/i;
-
-const assets = join(__dirname, 'build');
-const template = fs.readFileSync('./build/index.html', 'utf8');
-const favicon = require('serve-favicon')(join(assets, 'favicon.ico'));
+const template = readFileSync('build/index.html', 'utf8');
 
 function setHeaders(res, file) {
 	let cache = basename(file) === 'sw.js' ? 'private,no-cache' : 'public,max-age=31536000,immutable';
-	res.setHeader('Cache-Control', cache); // disable service worker cache
+	res.setHeader('Cache-Control', cache); // don't cache service worker file
 }
 
-express()
-	.use(favicon)
+polka()
 	.use(compression)
-	.use(express.static(assets, { setHeaders }))
+	.use(sirv('build', { setHeaders }))
 	.get('*', (req, res) => {
-		let url = req.url;
-		let body = render(h(App, { url }));
-		res.send(template.replace(RGX, body));
+		let body = render(h(App, { url:req.url }));
+		res.setHeader('Content-Type', 'text/html');
+		res.end(template.replace(RGX, body));
 	})
 	.listen(PORT, err => {
 		if (err) throw err;

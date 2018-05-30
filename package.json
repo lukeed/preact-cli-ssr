@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "compression": "^1.7.1",
-    "express": "^4.16.2",
+    "polka": "^0.4.0",
     "preact": "^8.2.1",
     "preact-compat": "^3.17.0",
     "preact-render-to-string": "^3.7.0",
-    "serve-favicon": "^2.4.5"
+    "sirv": "^0.1.2"
   }
 }
